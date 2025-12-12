@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output = "../src/generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Person {
+  id String @id @db.Uuid
+
+  name        String   @unique
+  dateOfBirth DateTime
+  color       String?
+  isHousemate Boolean  @default(false)
+
+  leaderboards Leaderboard[]
+
+  updatedAt DateTime @updatedAt
+
+  @@map("people")
+}
+
+model Leaderboard {
+  id Int @id @default(autoincrement())
+
+  semester DateTime
+  style    DisplayStyle @default(DECIMAL)
+
+  person   Person @relation(fields: [personId], references: [id])
+  personId String @db.Uuid
+
+  sleepingMisses DateTime[]
+  classMisses    DateTime[]
+
+  updatedAt DateTime @updatedAt
+
+  @@map("leaderboards")
+}
+
+enum DisplayStyle {
+  BINARY
+  HEX
+  DECIMAL
+  TOKIPONA
+  ZE
+}

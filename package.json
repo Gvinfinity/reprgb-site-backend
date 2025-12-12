@@ -1,0 +1,37 @@
+{
+  "name": "reprgb-site-backend",
+  "version": "1.0.0-alpha",
+  "description": "",
+  "homepage": "https://github.com/Gvinfinity/reprgb-site-backend#readme",
+  "bugs": {
+    "url": "https://github.com/Gvinfinity/reprgb-site-backend/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gvinfinity/reprgb-site-backend.git"
+  },
+  "license": "GPL-3.0",
+  "author": "RepRGB",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "@asteasolutions/zod-to-openapi": "^8.2.0",
+    "@prisma/adapter-pg": "^7.1.0",
+    "@prisma/client": "^7.1.0",
+    "@scalar/express-api-reference": "^0.8.26",
+    "@types/express": "^5.0.6",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "prisma": "^7.1.0",
+    "tsc": "^2.0.4",
+    "zod": "^4.1.13"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}
