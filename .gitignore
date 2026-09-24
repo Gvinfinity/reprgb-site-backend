@@ -5,3 +5,9 @@ node_modules/
 .env
 
 dist/
+backups/
+secrets/
+*.backup.json
+
+# Persistent local preview database and generated test credentials
+.local/

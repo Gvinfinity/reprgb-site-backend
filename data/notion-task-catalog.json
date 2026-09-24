@@ -1,0 +1,154 @@
+{
+  "source": "notion",
+  "sourceUrl": "https://lovely-humidity-a2c.notion.site/357601491f34807f83bde7e52917d410?v=357601491f3480c3b2c1000c48c12c6a",
+  "retrievedAt": "2026-09-24T14:47:39.177076+00:00",
+  "rows": [
+    {
+      "sourceId": "35760149-1f34-8088-9705-f1f19aad872c",
+      "name": "Limpar Bancada e Pia",
+      "area": "Cozinha",
+      "periodDays": 14,
+      "weightHours": 1.13
+    },
+    {
+      "sourceId": "35760149-1f34-80cf-bfdc-f28a8f74b308",
+      "name": "Limpar Sala de estar",
+      "area": "Sala de estar",
+      "periodDays": 7,
+      "weightHours": 0.75
+    },
+    {
+      "sourceId": "35760149-1f34-80d0-b8b6-d084abd3a6ca",
+      "name": "Limpar chão cozinha",
+      "area": "Cozinha",
+      "periodDays": 7,
+      "weightHours": 0.67
+    },
+    {
+      "sourceId": "35760149-1f34-8098-95c4-dcac717bff68",
+      "name": "Limpar chao garagem",
+      "area": "Garagem",
+      "periodDays": 14,
+      "weightHours": 0.5
+    },
+    {
+      "sourceId": "37860149-1f34-80e3-9852-fdf038a09f14",
+      "name": "Limpar panos de chão e de prato",
+      "area": "Área de serviço",
+      "periodDays": 28,
+      "weightHours": null
+    },
+    {
+      "sourceId": "38860149-1f34-80be-8d1e-e5dc71ff43c9",
+      "name": "Limpar corredores",
+      "area": "Corredor",
+      "periodDays": 14,
+      "weightHours": 0.5
+    },
+    {
+      "sourceId": "37860149-1f34-80e2-8128-eb776a0b0856",
+      "name": "Limpar area limpeza",
+      "area": "Área de serviço",
+      "periodDays": 28,
+      "weightHours": 0.5
+    },
+    {
+      "sourceId": "35760149-1f34-8008-9700-eb93bc73cbb9",
+      "name": "Limpar Fogão",
+      "area": "Cozinha",
+      "periodDays": 14,
+      "weightHours": 0.39
+    },
+    {
+      "sourceId": "35760149-1f34-8056-8ca0-f8b57ee8c40f",
+      "name": "Limpar sala de jantar",
+      "area": "Sala de jantar",
+      "periodDays": 14,
+      "weightHours": 0.75
+    },
+    {
+      "sourceId": "35760149-1f34-8030-a244-e37f0b9ab0d6",
+      "name": "Limpar lateral casa",
+      "area": "Quintal",
+      "periodDays": 30,
+      "weightHours": 0.5
+    },
+    {
+      "sourceId": "35760149-1f34-8048-b267-d3b45b784765",
+      "name": "Limpar frente casa",
+      "area": "Entrada",
+      "periodDays": 30,
+      "weightHours": 1.75
+    },
+    {
+      "sourceId": "37f60149-1f34-8051-9b69-d1b96c05b007",
+      "name": "Limpar encima exaustor",
+      "area": "Cozinha",
+      "periodDays": 84,
+      "weightHours": 1.5
+    },
+    {
+      "sourceId": "37f60149-1f34-8011-9556-c8a89c678fe4",
+      "name": "Limpar superficies corredor Piaui Scalabrini",
+      "area": "Corredor",
+      "periodDays": 84,
+      "weightHours": 0.5
+    },
+    {
+      "sourceId": "35760149-1f34-80e1-94fd-fac179383123",
+      "name": "Limpar traz casa",
+      "area": "Quintal",
+      "periodDays": 30,
+      "weightHours": null
+    },
+    {
+      "sourceId": "35760149-1f34-80c1-a754-ff2cc94d5a46",
+      "name": "Lavar balde de lixo",
+      "area": "Cozinha",
+      "periodDays": 14,
+      "weightHours": 0.5
+    },
+    {
+      "sourceId": "37f60149-1f34-8067-9de7-f5e416eef72e",
+      "name": "Limpar superficies cozinha",
+      "area": "Cozinha",
+      "periodDays": 84,
+      "weightHours": 1.5
+    },
+    {
+      "sourceId": "37860149-1f34-8008-b2b0-df184af3de16",
+      "name": "Testar servidor no IC",
+      "area": "Outro",
+      "periodDays": null,
+      "weightHours": 3.0
+    },
+    {
+      "sourceId": "37860149-1f34-80ea-ad13-f11386f82201",
+      "name": "Consertar Mop",
+      "area": "Área de serviço",
+      "periodDays": null,
+      "weightHours": null
+    },
+    {
+      "sourceId": "37860149-1f34-8062-bafe-f3a6ca9b803d",
+      "name": "Limpar embaixo da pia e lavar toda louça",
+      "area": "Cozinha",
+      "periodDays": null,
+      "weightHours": 2.5
+    },
+    {
+      "sourceId": "38f60149-1f34-8033-86cd-cb2191bf9e4b",
+      "name": "Doar roupas",
+      "area": "Casa toda",
+      "periodDays": null,
+      "weightHours": null
+    },
+    {
+      "sourceId": "38860149-1f34-80f0-b25b-cdf0fcacdb52",
+      "name": "Limpar superficies cozinha atrás",
+      "area": "Cozinha",
+      "periodDays": null,
+      "weightHours": null
+    }
+  ]
+}

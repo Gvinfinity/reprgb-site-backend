@@ -1,7 +1,11 @@
-import { Request, Response } from 'express';
-import { personService } from '../services/person';
-import { createPersonSchema, updatePersonSchema, personIdSchema } from '../schemas/person';
-import { ZodError } from 'zod';
+import { Request, Response } from "express";
+import { personService } from "../services/person.js";
+import {
+  createPersonSchema,
+  updatePersonSchema,
+  personIdSchema,
+} from "../schemas/person.js";
+import { ZodError } from "zod";
 
 export class PersonController {
   async create(req: Request, res: Response) {
@@ -11,14 +15,14 @@ export class PersonController {
       res.status(201).json(person);
     } catch (error) {
       if (error instanceof ZodError) {
-        return res.status(400).json({ 
-          error: 'Validation failed', 
-          details: error.issues 
+        return res.status(400).json({
+          error: "Validation failed",
+          details: error.issues,
         });
       }
-      res.status(500).json({ 
-        error: 'Failed to create person',
-        message: error instanceof Error ? error.message : 'Unknown error'
+      res.status(500).json({
+        error: "Failed to create person",
+        message: "Consulte os registros do servidor.",
       });
     }
   }
@@ -28,9 +32,9 @@ export class PersonController {
       const people = await personService.getAllPeople();
       res.status(200).json(people);
     } catch (error) {
-      res.status(500).json({ 
-        error: 'Failed to fetch people',
-        message: error instanceof Error ? error.message : 'Unknown error'
+      res.status(500).json({
+        error: "Failed to fetch people",
+        message: "Consulte os registros do servidor.",
       });
     }
   }
@@ -39,22 +43,22 @@ export class PersonController {
     try {
       const { id } = personIdSchema.parse(req.params);
       const person = await personService.getPersonById(id);
-      
+
       if (!person) {
-        return res.status(404).json({ error: 'Person not found' });
+        return res.status(404).json({ error: "Person not found" });
       }
-      
+
       res.status(200).json(person);
     } catch (error) {
       if (error instanceof ZodError) {
-        return res.status(400).json({ 
-          error: 'Invalid ID format', 
-          details: error.issues 
+        return res.status(400).json({
+          error: "Invalid ID format",
+          details: error.issues,
         });
       }
-      res.status(500).json({ 
-        error: 'Failed to fetch person',
-        message: error instanceof Error ? error.message : 'Unknown error'
+      res.status(500).json({
+        error: "Failed to fetch person",
+        message: "Consulte os registros do servidor.",
       });
     }
   }
@@ -67,14 +71,14 @@ export class PersonController {
       res.status(200).json(person);
     } catch (error) {
       if (error instanceof ZodError) {
-        return res.status(400).json({ 
-          error: 'Validation failed', 
-          details: error.issues 
+        return res.status(400).json({
+          error: "Validation failed",
+          details: error.issues,
         });
       }
-      res.status(500).json({ 
-        error: 'Failed to update person',
-        message: error instanceof Error ? error.message : 'Unknown error'
+      res.status(500).json({
+        error: "Failed to update person",
+        message: "Consulte os registros do servidor.",
       });
     }
   }
@@ -86,14 +90,14 @@ export class PersonController {
       res.status(204).send();
     } catch (error) {
       if (error instanceof ZodError) {
-        return res.status(400).json({ 
-          error: 'Invalid ID format', 
-          details: error.issues 
+        return res.status(400).json({
+          error: "Invalid ID format",
+          details: error.issues,
         });
       }
-      res.status(500).json({ 
-        error: 'Failed to delete person',
-        message: error instanceof Error ? error.message : 'Unknown error'
+      res.status(500).json({
+        error: "Failed to delete person",
+        message: "Consulte os registros do servidor.",
       });
     }
   }

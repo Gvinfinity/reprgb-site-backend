@@ -12,26 +12,55 @@
   },
   "license": "GPL-3.0",
   "author": "RepRGB",
-  "type": "commonjs",
-  "main": "index.js",
+  "type": "module",
+  "main": "dist/index.js",
   "scripts": {
-    "dev": "tsx src/index.ts"
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate deploy",
+    "db:seed": "tsx src/cli.ts seed",
+    "admin:bootstrap": "tsx src/cli.ts bootstrap",
+    "admin:reset": "tsx src/cli.ts reset",
+    "db:backup": "tsx src/cli.ts backup",
+    "db:restore": "tsx src/cli.ts restore",
+    "test:browser": "tsx tests/browser-smoke.ts",
+    "preview:local": "node scripts/local-preview.mjs"
   },
   "dependencies": {
     "@asteasolutions/zod-to-openapi": "^8.2.0",
-    "@prisma/adapter-pg": "^7.1.0",
-    "@prisma/client": "^7.1.0",
+    "@prisma/adapter-pg": "^7.10.0",
+    "@prisma/client": "^7.10.0",
     "@scalar/express-api-reference": "^0.8.26",
     "@types/express": "^5.0.6",
+    "better-auth": "^1.7.5",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
-    "prisma": "^7.1.0",
-    "tsc": "^2.0.4",
+    "express-rate-limit": "^8.7.0",
+    "multer": "^2.4.0",
+    "prisma": "^7.10.0",
+    "ws": "^8.21.3",
     "zod": "^4.1.13"
   },
   "devDependencies": {
+    "@types/multer": "^2.2.0",
     "@types/node": "^24.10.1",
+    "@types/supertest": "^7.2.1",
+    "@types/ws": "^8.18.1",
+    "embedded-postgres": "^18.4.0-beta.17",
+    "playwright": "^1.63.0",
+    "supertest": "^7.3.0",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^5.0.1"
+  },
+  "engines": {
+    "node": ">=22.12"
+  },
+  "overrides": {
+    "mysql2": "^3.24.4",
+    "deepmerge-ts": "^8.0.2"
   }
 }

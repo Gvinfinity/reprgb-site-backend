@@ -8,6 +8,20 @@
  *
  * 🟢 You can import this file directly.
  */
-export type * from './models/Person'
-export type * from './models/Leaderboard'
-export type * from './commonInputTypes'
+export type * from './models/Person.js'
+export type * from './models/Leaderboard.js'
+export type * from './models/User.js'
+export type * from './models/Session.js'
+export type * from './models/Account.js'
+export type * from './models/Verification.js'
+export type * from './models/Invitation.js'
+export type * from './models/Task.js'
+export type * from './models/TaskCompletion.js'
+export type * from './models/TaskEvent.js'
+export type * from './models/Quote.js'
+export type * from './models/QuoteImport.js'
+export type * from './models/Movie.js'
+export type * from './models/Screening.js'
+export type * from './models/DataImport.js'
+export type * from './models/ImportSource.js'
+export type * from './commonInputTypes.js'

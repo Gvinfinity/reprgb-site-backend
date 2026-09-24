@@ -18,3 +18,29 @@ export const DisplayStyle = {
 } as const
 
 export type DisplayStyle = (typeof DisplayStyle)[keyof typeof DisplayStyle]
+
+
+export const TaskLocation = {
+  GARAGE: 'GARAGE',
+  LAUNDRY: 'LAUNDRY',
+  DINING_ROOM: 'DINING_ROOM',
+  HOUSE: 'HOUSE',
+  KITCHEN: 'KITCHEN',
+  LIVING_ROOM: 'LIVING_ROOM',
+  BATHROOMS: 'BATHROOMS',
+  YARD: 'YARD',
+  ENTRANCE: 'ENTRANCE',
+  HALLWAY: 'HALLWAY',
+  OTHER: 'OTHER'
+} as const
+
+export type TaskLocation = (typeof TaskLocation)[keyof typeof TaskLocation]
+
+
+export const TaskStatus = {
+  pending: 'pending',
+  completed: 'completed',
+  archived: 'archived'
+} as const
+
+export type TaskStatus = (typeof TaskStatus)[keyof typeof TaskStatus]

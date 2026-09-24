@@ -1,0 +1,2 @@
+# Prisma owns these generated sources, including its whitespace conventions.
+src/generated/** linguist-generated=true whitespace=-blank-at-eol

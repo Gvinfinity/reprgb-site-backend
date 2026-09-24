@@ -1,12 +1,12 @@
-import { prisma } from "../PrismaClient"
-import { CreatePersonInput, UpdatePersonInput } from '../schemas/person';
+import { prisma } from "../PrismaClient.js";
+import { CreatePersonInput, UpdatePersonInput } from "../schemas/person.js";
 
 export class PersonService {
   async createPerson(data: CreatePersonInput) {
     return await prisma.person.create({
       data: {
         ...data,
-        dateOfBirth: new Date(data.dateOfBirth),
+        dateOfBirth: data.dateOfBirth ? new Date(data.dateOfBirth) : null,
       },
       include: {
         leaderboards: true,
@@ -36,7 +36,7 @@ export class PersonService {
     if (data.dateOfBirth) {
       updateData.dateOfBirth = new Date(data.dateOfBirth);
     }
-    
+
     return await prisma.person.update({
       where: { id },
       data: updateData,

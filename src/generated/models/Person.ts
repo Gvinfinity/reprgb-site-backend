@@ -9,8 +9,8 @@
  * 🟢 You can import this file directly.
  */
 import type * as runtime from "@prisma/client/runtime/client"
-import type * as $Enums from "../enums"
-import type * as Prisma from "../internal/prismaNamespace"
+import type * as $Enums from "../enums.js"
+import type * as Prisma from "../internal/prismaNamespace.js"
 
 /**
  * Model Person
@@ -30,6 +30,7 @@ export type PersonMinAggregateOutputType = {
   dateOfBirth: Date | null
   color: string | null
   isHousemate: boolean | null
+  active: boolean | null
   updatedAt: Date | null
 }
 
@@ -39,6 +40,7 @@ export type PersonMaxAggregateOutputType = {
   dateOfBirth: Date | null
   color: string | null
   isHousemate: boolean | null
+  active: boolean | null
   updatedAt: Date | null
 }
 
@@ -48,6 +50,7 @@ export type PersonCountAggregateOutputType = {
   dateOfBirth: number
   color: number
   isHousemate: number
+  active: number
   updatedAt: number
   _all: number
 }
@@ -59,6 +62,7 @@ export type PersonMinAggregateInputType = {
   dateOfBirth?: true
   color?: true
   isHousemate?: true
+  active?: true
   updatedAt?: true
 }
 
@@ -68,6 +72,7 @@ export type PersonMaxAggregateInputType = {
   dateOfBirth?: true
   color?: true
   isHousemate?: true
+  active?: true
   updatedAt?: true
 }
 
@@ -77,6 +82,7 @@ export type PersonCountAggregateInputType = {
   dateOfBirth?: true
   color?: true
   isHousemate?: true
+  active?: true
   updatedAt?: true
   _all?: true
 }
@@ -156,16 +162,17 @@ export type PersonGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 export type PersonGroupByOutputType = {
   id: string
   name: string
-  dateOfBirth: Date
+  dateOfBirth: Date | null
   color: string | null
   isHousemate: boolean
+  active: boolean
   updatedAt: Date
   _count: PersonCountAggregateOutputType | null
   _min: PersonMinAggregateOutputType | null
   _max: PersonMaxAggregateOutputType | null
 }
 
-type GetPersonGroupByPayload<T extends PersonGroupByArgs> = Prisma.PrismaPromise<
+export type GetPersonGroupByPayload<T extends PersonGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<PersonGroupByOutputType, T['by']> &
       {
@@ -186,20 +193,30 @@ export type PersonWhereInput = {
   NOT?: Prisma.PersonWhereInput | Prisma.PersonWhereInput[]
   id?: Prisma.UuidFilter<"Person"> | string
   name?: Prisma.StringFilter<"Person"> | string
-  dateOfBirth?: Prisma.DateTimeFilter<"Person"> | Date | string
+  dateOfBirth?: Prisma.DateTimeNullableFilter<"Person"> | Date | string | null
   color?: Prisma.StringNullableFilter<"Person"> | string | null
   isHousemate?: Prisma.BoolFilter<"Person"> | boolean
+  active?: Prisma.BoolFilter<"Person"> | boolean
   updatedAt?: Prisma.DateTimeFilter<"Person"> | Date | string
+  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  invitations?: Prisma.InvitationListRelationFilter
+  tasks?: Prisma.TaskListRelationFilter
+  completions?: Prisma.TaskCompletionListRelationFilter
   leaderboards?: Prisma.LeaderboardListRelationFilter
 }
 
 export type PersonOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  dateOfBirth?: Prisma.SortOrder
+  dateOfBirth?: Prisma.SortOrderInput | Prisma.SortOrder
   color?: Prisma.SortOrderInput | Prisma.SortOrder
   isHousemate?: Prisma.SortOrder
+  active?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  user?: Prisma.UserOrderByWithRelationInput
+  invitations?: Prisma.InvitationOrderByRelationAggregateInput
+  tasks?: Prisma.TaskOrderByRelationAggregateInput
+  completions?: Prisma.TaskCompletionOrderByRelationAggregateInput
   leaderboards?: Prisma.LeaderboardOrderByRelationAggregateInput
 }
 
@@ -209,19 +226,25 @@ export type PersonWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.PersonWhereInput | Prisma.PersonWhereInput[]
   OR?: Prisma.PersonWhereInput[]
   NOT?: Prisma.PersonWhereInput | Prisma.PersonWhereInput[]
-  dateOfBirth?: Prisma.DateTimeFilter<"Person"> | Date | string
+  dateOfBirth?: Prisma.DateTimeNullableFilter<"Person"> | Date | string | null
   color?: Prisma.StringNullableFilter<"Person"> | string | null
   isHousemate?: Prisma.BoolFilter<"Person"> | boolean
+  active?: Prisma.BoolFilter<"Person"> | boolean
   updatedAt?: Prisma.DateTimeFilter<"Person"> | Date | string
+  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  invitations?: Prisma.InvitationListRelationFilter
+  tasks?: Prisma.TaskListRelationFilter
+  completions?: Prisma.TaskCompletionListRelationFilter
   leaderboards?: Prisma.LeaderboardListRelationFilter
 }, "id" | "name">
 
 export type PersonOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  dateOfBirth?: Prisma.SortOrder
+  dateOfBirth?: Prisma.SortOrderInput | Prisma.SortOrder
   color?: Prisma.SortOrderInput | Prisma.SortOrder
   isHousemate?: Prisma.SortOrder
+  active?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.PersonCountOrderByAggregateInput
   _max?: Prisma.PersonMaxOrderByAggregateInput
@@ -234,76 +257,100 @@ export type PersonScalarWhereWithAggregatesInput = {
   NOT?: Prisma.PersonScalarWhereWithAggregatesInput | Prisma.PersonScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"Person"> | string
   name?: Prisma.StringWithAggregatesFilter<"Person"> | string
-  dateOfBirth?: Prisma.DateTimeWithAggregatesFilter<"Person"> | Date | string
+  dateOfBirth?: Prisma.DateTimeNullableWithAggregatesFilter<"Person"> | Date | string | null
   color?: Prisma.StringNullableWithAggregatesFilter<"Person"> | string | null
   isHousemate?: Prisma.BoolWithAggregatesFilter<"Person"> | boolean
+  active?: Prisma.BoolWithAggregatesFilter<"Person"> | boolean
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Person"> | Date | string
 }
 
 export type PersonCreateInput = {
-  id: string
+  id?: string
   name: string
-  dateOfBirth: Date | string
+  dateOfBirth?: Date | string | null
   color?: string | null
   isHousemate?: boolean
+  active?: boolean
   updatedAt?: Date | string
+  user?: Prisma.UserCreateNestedOneWithoutResidentInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutResidentInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutAssigneeInput
+  completions?: Prisma.TaskCompletionCreateNestedManyWithoutResidentInput
   leaderboards?: Prisma.LeaderboardCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUncheckedCreateInput = {
-  id: string
+  id?: string
   name: string
-  dateOfBirth: Date | string
+  dateOfBirth?: Date | string | null
   color?: string | null
   isHousemate?: boolean
+  active?: boolean
   updatedAt?: Date | string
+  user?: Prisma.UserUncheckedCreateNestedOneWithoutResidentInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutResidentInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutAssigneeInput
+  completions?: Prisma.TaskCompletionUncheckedCreateNestedManyWithoutResidentInput
   leaderboards?: Prisma.LeaderboardUncheckedCreateNestedManyWithoutPersonInput
 }
 
 export type PersonUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  dateOfBirth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isHousemate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneWithoutResidentNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutResidentNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutAssigneeNestedInput
+  completions?: Prisma.TaskCompletionUpdateManyWithoutResidentNestedInput
   leaderboards?: Prisma.LeaderboardUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  dateOfBirth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isHousemate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUncheckedUpdateOneWithoutResidentNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutResidentNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutAssigneeNestedInput
+  completions?: Prisma.TaskCompletionUncheckedUpdateManyWithoutResidentNestedInput
   leaderboards?: Prisma.LeaderboardUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateManyInput = {
-  id: string
+  id?: string
   name: string
-  dateOfBirth: Date | string
+  dateOfBirth?: Date | string | null
   color?: string | null
   isHousemate?: boolean
+  active?: boolean
   updatedAt?: Date | string
 }
 
 export type PersonUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  dateOfBirth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isHousemate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PersonUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  dateOfBirth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isHousemate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -313,6 +360,7 @@ export type PersonCountOrderByAggregateInput = {
   dateOfBirth?: Prisma.SortOrder
   color?: Prisma.SortOrder
   isHousemate?: Prisma.SortOrder
+  active?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -322,6 +370,7 @@ export type PersonMaxOrderByAggregateInput = {
   dateOfBirth?: Prisma.SortOrder
   color?: Prisma.SortOrder
   isHousemate?: Prisma.SortOrder
+  active?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -331,6 +380,7 @@ export type PersonMinOrderByAggregateInput = {
   dateOfBirth?: Prisma.SortOrder
   color?: Prisma.SortOrder
   isHousemate?: Prisma.SortOrder
+  active?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -339,12 +389,17 @@ export type PersonScalarRelationFilter = {
   isNot?: Prisma.PersonWhereInput
 }
 
+export type PersonNullableScalarRelationFilter = {
+  is?: Prisma.PersonWhereInput | null
+  isNot?: Prisma.PersonWhereInput | null
+}
+
 export type StringFieldUpdateOperationsInput = {
   set?: string
 }
 
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
 }
 
 export type NullableStringFieldUpdateOperationsInput = {
@@ -353,6 +408,10 @@ export type NullableStringFieldUpdateOperationsInput = {
 
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
+}
+
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
 }
 
 export type PersonCreateNestedOneWithoutLeaderboardsInput = {
@@ -369,22 +428,92 @@ export type PersonUpdateOneRequiredWithoutLeaderboardsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutLeaderboardsInput, Prisma.PersonUpdateWithoutLeaderboardsInput>, Prisma.PersonUncheckedUpdateWithoutLeaderboardsInput>
 }
 
+export type PersonCreateNestedOneWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutUserInput, Prisma.PersonUncheckedCreateWithoutUserInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutUserInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonUpdateOneWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutUserInput, Prisma.PersonUncheckedCreateWithoutUserInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutUserInput
+  upsert?: Prisma.PersonUpsertWithoutUserInput
+  disconnect?: Prisma.PersonWhereInput | boolean
+  delete?: Prisma.PersonWhereInput | boolean
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutUserInput, Prisma.PersonUpdateWithoutUserInput>, Prisma.PersonUncheckedUpdateWithoutUserInput>
+}
+
+export type PersonCreateNestedOneWithoutInvitationsInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutInvitationsInput, Prisma.PersonUncheckedCreateWithoutInvitationsInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutInvitationsInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonUpdateOneRequiredWithoutInvitationsNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutInvitationsInput, Prisma.PersonUncheckedCreateWithoutInvitationsInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutInvitationsInput
+  upsert?: Prisma.PersonUpsertWithoutInvitationsInput
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutInvitationsInput, Prisma.PersonUpdateWithoutInvitationsInput>, Prisma.PersonUncheckedUpdateWithoutInvitationsInput>
+}
+
+export type PersonCreateNestedOneWithoutTasksInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutTasksInput, Prisma.PersonUncheckedCreateWithoutTasksInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutTasksInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonUpdateOneWithoutTasksNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutTasksInput, Prisma.PersonUncheckedCreateWithoutTasksInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutTasksInput
+  upsert?: Prisma.PersonUpsertWithoutTasksInput
+  disconnect?: Prisma.PersonWhereInput | boolean
+  delete?: Prisma.PersonWhereInput | boolean
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutTasksInput, Prisma.PersonUpdateWithoutTasksInput>, Prisma.PersonUncheckedUpdateWithoutTasksInput>
+}
+
+export type PersonCreateNestedOneWithoutCompletionsInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutCompletionsInput, Prisma.PersonUncheckedCreateWithoutCompletionsInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutCompletionsInput
+  connect?: Prisma.PersonWhereUniqueInput
+}
+
+export type PersonUpdateOneRequiredWithoutCompletionsNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutCompletionsInput, Prisma.PersonUncheckedCreateWithoutCompletionsInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutCompletionsInput
+  upsert?: Prisma.PersonUpsertWithoutCompletionsInput
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutCompletionsInput, Prisma.PersonUpdateWithoutCompletionsInput>, Prisma.PersonUncheckedUpdateWithoutCompletionsInput>
+}
+
 export type PersonCreateWithoutLeaderboardsInput = {
-  id: string
+  id?: string
   name: string
-  dateOfBirth: Date | string
+  dateOfBirth?: Date | string | null
   color?: string | null
   isHousemate?: boolean
+  active?: boolean
   updatedAt?: Date | string
+  user?: Prisma.UserCreateNestedOneWithoutResidentInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutResidentInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutAssigneeInput
+  completions?: Prisma.TaskCompletionCreateNestedManyWithoutResidentInput
 }
 
 export type PersonUncheckedCreateWithoutLeaderboardsInput = {
-  id: string
+  id?: string
   name: string
-  dateOfBirth: Date | string
+  dateOfBirth?: Date | string | null
   color?: string | null
   isHousemate?: boolean
+  active?: boolean
   updatedAt?: Date | string
+  user?: Prisma.UserUncheckedCreateNestedOneWithoutResidentInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutResidentInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutAssigneeInput
+  completions?: Prisma.TaskCompletionUncheckedCreateNestedManyWithoutResidentInput
 }
 
 export type PersonCreateOrConnectWithoutLeaderboardsInput = {
@@ -406,19 +535,317 @@ export type PersonUpdateToOneWithWhereWithoutLeaderboardsInput = {
 export type PersonUpdateWithoutLeaderboardsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  dateOfBirth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isHousemate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneWithoutResidentNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutResidentNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutAssigneeNestedInput
+  completions?: Prisma.TaskCompletionUpdateManyWithoutResidentNestedInput
 }
 
 export type PersonUncheckedUpdateWithoutLeaderboardsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  dateOfBirth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isHousemate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUncheckedUpdateOneWithoutResidentNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutResidentNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutAssigneeNestedInput
+  completions?: Prisma.TaskCompletionUncheckedUpdateManyWithoutResidentNestedInput
+}
+
+export type PersonCreateWithoutUserInput = {
+  id?: string
+  name: string
+  dateOfBirth?: Date | string | null
+  color?: string | null
+  isHousemate?: boolean
+  active?: boolean
+  updatedAt?: Date | string
+  invitations?: Prisma.InvitationCreateNestedManyWithoutResidentInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutAssigneeInput
+  completions?: Prisma.TaskCompletionCreateNestedManyWithoutResidentInput
+  leaderboards?: Prisma.LeaderboardCreateNestedManyWithoutPersonInput
+}
+
+export type PersonUncheckedCreateWithoutUserInput = {
+  id?: string
+  name: string
+  dateOfBirth?: Date | string | null
+  color?: string | null
+  isHousemate?: boolean
+  active?: boolean
+  updatedAt?: Date | string
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutResidentInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutAssigneeInput
+  completions?: Prisma.TaskCompletionUncheckedCreateNestedManyWithoutResidentInput
+  leaderboards?: Prisma.LeaderboardUncheckedCreateNestedManyWithoutPersonInput
+}
+
+export type PersonCreateOrConnectWithoutUserInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutUserInput, Prisma.PersonUncheckedCreateWithoutUserInput>
+}
+
+export type PersonUpsertWithoutUserInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutUserInput, Prisma.PersonUncheckedUpdateWithoutUserInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutUserInput, Prisma.PersonUncheckedCreateWithoutUserInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutUserInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutUserInput, Prisma.PersonUncheckedUpdateWithoutUserInput>
+}
+
+export type PersonUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isHousemate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  invitations?: Prisma.InvitationUpdateManyWithoutResidentNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutAssigneeNestedInput
+  completions?: Prisma.TaskCompletionUpdateManyWithoutResidentNestedInput
+  leaderboards?: Prisma.LeaderboardUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isHousemate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutResidentNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutAssigneeNestedInput
+  completions?: Prisma.TaskCompletionUncheckedUpdateManyWithoutResidentNestedInput
+  leaderboards?: Prisma.LeaderboardUncheckedUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonCreateWithoutInvitationsInput = {
+  id?: string
+  name: string
+  dateOfBirth?: Date | string | null
+  color?: string | null
+  isHousemate?: boolean
+  active?: boolean
+  updatedAt?: Date | string
+  user?: Prisma.UserCreateNestedOneWithoutResidentInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutAssigneeInput
+  completions?: Prisma.TaskCompletionCreateNestedManyWithoutResidentInput
+  leaderboards?: Prisma.LeaderboardCreateNestedManyWithoutPersonInput
+}
+
+export type PersonUncheckedCreateWithoutInvitationsInput = {
+  id?: string
+  name: string
+  dateOfBirth?: Date | string | null
+  color?: string | null
+  isHousemate?: boolean
+  active?: boolean
+  updatedAt?: Date | string
+  user?: Prisma.UserUncheckedCreateNestedOneWithoutResidentInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutAssigneeInput
+  completions?: Prisma.TaskCompletionUncheckedCreateNestedManyWithoutResidentInput
+  leaderboards?: Prisma.LeaderboardUncheckedCreateNestedManyWithoutPersonInput
+}
+
+export type PersonCreateOrConnectWithoutInvitationsInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutInvitationsInput, Prisma.PersonUncheckedCreateWithoutInvitationsInput>
+}
+
+export type PersonUpsertWithoutInvitationsInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutInvitationsInput, Prisma.PersonUncheckedUpdateWithoutInvitationsInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutInvitationsInput, Prisma.PersonUncheckedCreateWithoutInvitationsInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutInvitationsInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutInvitationsInput, Prisma.PersonUncheckedUpdateWithoutInvitationsInput>
+}
+
+export type PersonUpdateWithoutInvitationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isHousemate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneWithoutResidentNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutAssigneeNestedInput
+  completions?: Prisma.TaskCompletionUpdateManyWithoutResidentNestedInput
+  leaderboards?: Prisma.LeaderboardUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutInvitationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isHousemate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUncheckedUpdateOneWithoutResidentNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutAssigneeNestedInput
+  completions?: Prisma.TaskCompletionUncheckedUpdateManyWithoutResidentNestedInput
+  leaderboards?: Prisma.LeaderboardUncheckedUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonCreateWithoutTasksInput = {
+  id?: string
+  name: string
+  dateOfBirth?: Date | string | null
+  color?: string | null
+  isHousemate?: boolean
+  active?: boolean
+  updatedAt?: Date | string
+  user?: Prisma.UserCreateNestedOneWithoutResidentInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutResidentInput
+  completions?: Prisma.TaskCompletionCreateNestedManyWithoutResidentInput
+  leaderboards?: Prisma.LeaderboardCreateNestedManyWithoutPersonInput
+}
+
+export type PersonUncheckedCreateWithoutTasksInput = {
+  id?: string
+  name: string
+  dateOfBirth?: Date | string | null
+  color?: string | null
+  isHousemate?: boolean
+  active?: boolean
+  updatedAt?: Date | string
+  user?: Prisma.UserUncheckedCreateNestedOneWithoutResidentInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutResidentInput
+  completions?: Prisma.TaskCompletionUncheckedCreateNestedManyWithoutResidentInput
+  leaderboards?: Prisma.LeaderboardUncheckedCreateNestedManyWithoutPersonInput
+}
+
+export type PersonCreateOrConnectWithoutTasksInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutTasksInput, Prisma.PersonUncheckedCreateWithoutTasksInput>
+}
+
+export type PersonUpsertWithoutTasksInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutTasksInput, Prisma.PersonUncheckedUpdateWithoutTasksInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutTasksInput, Prisma.PersonUncheckedCreateWithoutTasksInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutTasksInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutTasksInput, Prisma.PersonUncheckedUpdateWithoutTasksInput>
+}
+
+export type PersonUpdateWithoutTasksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isHousemate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneWithoutResidentNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutResidentNestedInput
+  completions?: Prisma.TaskCompletionUpdateManyWithoutResidentNestedInput
+  leaderboards?: Prisma.LeaderboardUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutTasksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isHousemate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUncheckedUpdateOneWithoutResidentNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutResidentNestedInput
+  completions?: Prisma.TaskCompletionUncheckedUpdateManyWithoutResidentNestedInput
+  leaderboards?: Prisma.LeaderboardUncheckedUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonCreateWithoutCompletionsInput = {
+  id?: string
+  name: string
+  dateOfBirth?: Date | string | null
+  color?: string | null
+  isHousemate?: boolean
+  active?: boolean
+  updatedAt?: Date | string
+  user?: Prisma.UserCreateNestedOneWithoutResidentInput
+  invitations?: Prisma.InvitationCreateNestedManyWithoutResidentInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutAssigneeInput
+  leaderboards?: Prisma.LeaderboardCreateNestedManyWithoutPersonInput
+}
+
+export type PersonUncheckedCreateWithoutCompletionsInput = {
+  id?: string
+  name: string
+  dateOfBirth?: Date | string | null
+  color?: string | null
+  isHousemate?: boolean
+  active?: boolean
+  updatedAt?: Date | string
+  user?: Prisma.UserUncheckedCreateNestedOneWithoutResidentInput
+  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutResidentInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutAssigneeInput
+  leaderboards?: Prisma.LeaderboardUncheckedCreateNestedManyWithoutPersonInput
+}
+
+export type PersonCreateOrConnectWithoutCompletionsInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutCompletionsInput, Prisma.PersonUncheckedCreateWithoutCompletionsInput>
+}
+
+export type PersonUpsertWithoutCompletionsInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutCompletionsInput, Prisma.PersonUncheckedUpdateWithoutCompletionsInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutCompletionsInput, Prisma.PersonUncheckedCreateWithoutCompletionsInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutCompletionsInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutCompletionsInput, Prisma.PersonUncheckedUpdateWithoutCompletionsInput>
+}
+
+export type PersonUpdateWithoutCompletionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isHousemate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneWithoutResidentNestedInput
+  invitations?: Prisma.InvitationUpdateManyWithoutResidentNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutAssigneeNestedInput
+  leaderboards?: Prisma.LeaderboardUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutCompletionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isHousemate?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUncheckedUpdateOneWithoutResidentNestedInput
+  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutResidentNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutAssigneeNestedInput
+  leaderboards?: Prisma.LeaderboardUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 
@@ -427,10 +854,16 @@ export type PersonUncheckedUpdateWithoutLeaderboardsInput = {
  */
 
 export type PersonCountOutputType = {
+  invitations: number
+  tasks: number
+  completions: number
   leaderboards: number
 }
 
 export type PersonCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  invitations?: boolean | PersonCountOutputTypeCountInvitationsArgs
+  tasks?: boolean | PersonCountOutputTypeCountTasksArgs
+  completions?: boolean | PersonCountOutputTypeCountCompletionsArgs
   leaderboards?: boolean | PersonCountOutputTypeCountLeaderboardsArgs
 }
 
@@ -447,6 +880,27 @@ export type PersonCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exten
 /**
  * PersonCountOutputType without action
  */
+export type PersonCountOutputTypeCountInvitationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.InvitationWhereInput
+}
+
+/**
+ * PersonCountOutputType without action
+ */
+export type PersonCountOutputTypeCountTasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TaskWhereInput
+}
+
+/**
+ * PersonCountOutputType without action
+ */
+export type PersonCountOutputTypeCountCompletionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TaskCompletionWhereInput
+}
+
+/**
+ * PersonCountOutputType without action
+ */
 export type PersonCountOutputTypeCountLeaderboardsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.LeaderboardWhereInput
 }
@@ -458,7 +912,12 @@ export type PersonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   dateOfBirth?: boolean
   color?: boolean
   isHousemate?: boolean
+  active?: boolean
   updatedAt?: boolean
+  user?: boolean | Prisma.Person$userArgs<ExtArgs>
+  invitations?: boolean | Prisma.Person$invitationsArgs<ExtArgs>
+  tasks?: boolean | Prisma.Person$tasksArgs<ExtArgs>
+  completions?: boolean | Prisma.Person$completionsArgs<ExtArgs>
   leaderboards?: boolean | Prisma.Person$leaderboardsArgs<ExtArgs>
   _count?: boolean | Prisma.PersonCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["person"]>
@@ -469,6 +928,7 @@ export type PersonSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   dateOfBirth?: boolean
   color?: boolean
   isHousemate?: boolean
+  active?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["person"]>
 
@@ -478,6 +938,7 @@ export type PersonSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   dateOfBirth?: boolean
   color?: boolean
   isHousemate?: boolean
+  active?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["person"]>
 
@@ -487,11 +948,16 @@ export type PersonSelectScalar = {
   dateOfBirth?: boolean
   color?: boolean
   isHousemate?: boolean
+  active?: boolean
   updatedAt?: boolean
 }
 
-export type PersonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "dateOfBirth" | "color" | "isHousemate" | "updatedAt", ExtArgs["result"]["person"]>
+export type PersonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "dateOfBirth" | "color" | "isHousemate" | "active" | "updatedAt", ExtArgs["result"]["person"]>
 export type PersonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.Person$userArgs<ExtArgs>
+  invitations?: boolean | Prisma.Person$invitationsArgs<ExtArgs>
+  tasks?: boolean | Prisma.Person$tasksArgs<ExtArgs>
+  completions?: boolean | Prisma.Person$completionsArgs<ExtArgs>
   leaderboards?: boolean | Prisma.Person$leaderboardsArgs<ExtArgs>
   _count?: boolean | Prisma.PersonCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -501,14 +967,19 @@ export type PersonIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
 export type $PersonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Person"
   objects: {
+    user: Prisma.$UserPayload<ExtArgs> | null
+    invitations: Prisma.$InvitationPayload<ExtArgs>[]
+    tasks: Prisma.$TaskPayload<ExtArgs>[]
+    completions: Prisma.$TaskCompletionPayload<ExtArgs>[]
     leaderboards: Prisma.$LeaderboardPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
-    dateOfBirth: Date
+    dateOfBirth: Date | null
     color: string | null
     isHousemate: boolean
+    active: boolean
     updatedAt: Date
   }, ExtArgs["result"]["person"]>
   composites: {}
@@ -904,6 +1375,10 @@ readonly fields: PersonFieldRefs;
  */
 export interface Prisma__PersonClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  user<T extends Prisma.Person$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$userArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  invitations<T extends Prisma.Person$invitationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$invitationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  tasks<T extends Prisma.Person$tasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  completions<T extends Prisma.Person$completionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$completionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskCompletionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   leaderboards<T extends Prisma.Person$leaderboardsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$leaderboardsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeaderboardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -939,6 +1414,7 @@ export interface PersonFieldRefs {
   readonly dateOfBirth: Prisma.FieldRef<"Person", 'DateTime'>
   readonly color: Prisma.FieldRef<"Person", 'String'>
   readonly isHousemate: Prisma.FieldRef<"Person", 'Boolean'>
+  readonly active: Prisma.FieldRef<"Person", 'Boolean'>
   readonly updatedAt: Prisma.FieldRef<"Person", 'DateTime'>
 }
     
@@ -1136,6 +1612,11 @@ export type PersonFindManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Skip the first `n` People.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of People.
+   */
   distinct?: Prisma.PersonScalarFieldEnum | Prisma.PersonScalarFieldEnum[]
 }
 
@@ -1325,6 +1806,97 @@ export type PersonDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Limit how many People to delete.
    */
   limit?: number
+}
+
+/**
+ * Person.user
+ */
+export type Person$userArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * Person.invitations
+ */
+export type Person$invitationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Invitation
+   */
+  select?: Prisma.InvitationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Invitation
+   */
+  omit?: Prisma.InvitationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InvitationInclude<ExtArgs> | null
+  where?: Prisma.InvitationWhereInput
+  orderBy?: Prisma.InvitationOrderByWithRelationInput | Prisma.InvitationOrderByWithRelationInput[]
+  cursor?: Prisma.InvitationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.InvitationScalarFieldEnum | Prisma.InvitationScalarFieldEnum[]
+}
+
+/**
+ * Person.tasks
+ */
+export type Person$tasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Task
+   */
+  select?: Prisma.TaskSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Task
+   */
+  omit?: Prisma.TaskOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TaskInclude<ExtArgs> | null
+  where?: Prisma.TaskWhereInput
+  orderBy?: Prisma.TaskOrderByWithRelationInput | Prisma.TaskOrderByWithRelationInput[]
+  cursor?: Prisma.TaskWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TaskScalarFieldEnum | Prisma.TaskScalarFieldEnum[]
+}
+
+/**
+ * Person.completions
+ */
+export type Person$completionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TaskCompletion
+   */
+  select?: Prisma.TaskCompletionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TaskCompletion
+   */
+  omit?: Prisma.TaskCompletionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TaskCompletionInclude<ExtArgs> | null
+  where?: Prisma.TaskCompletionWhereInput
+  orderBy?: Prisma.TaskCompletionOrderByWithRelationInput | Prisma.TaskCompletionOrderByWithRelationInput[]
+  cursor?: Prisma.TaskCompletionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TaskCompletionScalarFieldEnum | Prisma.TaskCompletionScalarFieldEnum[]
 }
 
 /**

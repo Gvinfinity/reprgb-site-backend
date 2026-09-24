@@ -9,8 +9,8 @@
  * 🟢 You can import this file directly.
  */
 import type * as runtime from "@prisma/client/runtime/client"
-import type * as $Enums from "../enums"
-import type * as Prisma from "../internal/prismaNamespace"
+import type * as $Enums from "../enums.js"
+import type * as Prisma from "../internal/prismaNamespace.js"
 
 /**
  * Model Leaderboard
@@ -198,7 +198,7 @@ export type LeaderboardGroupByOutputType = {
   _max: LeaderboardMaxAggregateOutputType | null
 }
 
-type GetLeaderboardGroupByPayload<T extends LeaderboardGroupByArgs> = Prisma.PrismaPromise<
+export type GetLeaderboardGroupByPayload<T extends LeaderboardGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<LeaderboardGroupByOutputType, T['by']> &
       {
@@ -1257,6 +1257,11 @@ export type LeaderboardFindManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Skip the first `n` Leaderboards.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of Leaderboards.
+   */
   distinct?: Prisma.LeaderboardScalarFieldEnum | Prisma.LeaderboardScalarFieldEnum[]
 }
 

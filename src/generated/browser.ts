@@ -13,10 +13,10 @@
  * 🟢 You can import this file directly.
  */
 
-import * as Prisma from './internal/prismaNamespaceBrowser'
+import * as Prisma from './internal/prismaNamespaceBrowser.js'
 export { Prisma }
-export * as $Enums from './enums'
-export * from './enums';
+export * as $Enums from './enums.js'
+export * from './enums.js';
 /**
  * Model Person
  * 
@@ -27,3 +27,73 @@ export type Person = Prisma.PersonModel
  * 
  */
 export type Leaderboard = Prisma.LeaderboardModel
+/**
+ * Model User
+ * 
+ */
+export type User = Prisma.UserModel
+/**
+ * Model Session
+ * 
+ */
+export type Session = Prisma.SessionModel
+/**
+ * Model Account
+ * 
+ */
+export type Account = Prisma.AccountModel
+/**
+ * Model Verification
+ * 
+ */
+export type Verification = Prisma.VerificationModel
+/**
+ * Model Invitation
+ * 
+ */
+export type Invitation = Prisma.InvitationModel
+/**
+ * Model Task
+ * 
+ */
+export type Task = Prisma.TaskModel
+/**
+ * Model TaskCompletion
+ * 
+ */
+export type TaskCompletion = Prisma.TaskCompletionModel
+/**
+ * Model TaskEvent
+ * 
+ */
+export type TaskEvent = Prisma.TaskEventModel
+/**
+ * Model Quote
+ * 
+ */
+export type Quote = Prisma.QuoteModel
+/**
+ * Model QuoteImport
+ * 
+ */
+export type QuoteImport = Prisma.QuoteImportModel
+/**
+ * Model Movie
+ * 
+ */
+export type Movie = Prisma.MovieModel
+/**
+ * Model Screening
+ * 
+ */
+export type Screening = Prisma.ScreeningModel
+/**
+ * Model DataImport
+ * 
+ */
+export type DataImport = Prisma.DataImportModel
+/**
+ * Model ImportSource
+ * 
+ */
+export type ImportSource = Prisma.ImportSourceModel

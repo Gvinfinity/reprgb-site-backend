@@ -14,13 +14,18 @@ datasource db {
 }
 
 model Person {
-  id String @id @db.Uuid
+  id String @id @default(uuid()) @db.Uuid
 
   name        String   @unique
-  dateOfBirth DateTime
+  dateOfBirth DateTime?
   color       String?
   isHousemate Boolean  @default(false)
 
+  active Boolean @default(true)
+  user User?
+  invitations Invitation[]
+  tasks Task[]
+  completions TaskCompletion[]
   leaderboards Leaderboard[]
 
   updatedAt DateTime @updatedAt
@@ -51,4 +56,176 @@ enum DisplayStyle {
   DECIMAL
   TOKIPONA
   ZE
+}
+
+model User {
+ id String @id
+ name String
+ email String @unique
+ emailVerified Boolean @default(false)
+ image String?
+ role String @default("resident")
+ active Boolean @default(true)
+ residentId String? @unique @db.Uuid
+ resident Person? @relation(fields:[residentId], references:[id])
+ createdAt DateTime @default(now())
+ updatedAt DateTime @updatedAt
+ sessions Session[]
+ accounts Account[]
+}
+model Session {
+ id String @id
+ token String @unique
+ userId String
+ user User @relation(fields:[userId], references:[id], onDelete:Cascade)
+ expiresAt DateTime
+ ipAddress String?
+ userAgent String?
+ createdAt DateTime @default(now())
+ updatedAt DateTime @updatedAt
+ @@index([userId])
+}
+model Account {
+ id String @id
+ accountId String
+ providerId String
+ userId String
+ user User @relation(fields:[userId], references:[id], onDelete:Cascade)
+ password String?
+ accessToken String?
+ refreshToken String?
+ idToken String?
+ accessTokenExpiresAt DateTime?
+ refreshTokenExpiresAt DateTime?
+ scope String?
+ createdAt DateTime @default(now())
+ updatedAt DateTime @updatedAt
+ @@unique([providerId,accountId])
+ @@index([userId])
+}
+model Verification {
+ id String @id
+ identifier String
+ value String
+ expiresAt DateTime
+ createdAt DateTime @default(now())
+ updatedAt DateTime @updatedAt
+ @@index([identifier])
+}
+model Invitation {
+ id String @id @default(uuid())
+ email String
+ residentId String @db.Uuid
+ resident Person @relation(fields:[residentId],references:[id])
+ tokenHash String @unique
+ expiresAt DateTime
+ usedAt DateTime?
+ createdAt DateTime @default(now())
+}
+enum TaskLocation {
+ GARAGE
+ LAUNDRY
+ DINING_ROOM
+ HOUSE
+ KITCHEN
+ LIVING_ROOM
+ BATHROOMS
+ YARD
+ ENTRANCE
+ HALLWAY
+ OTHER
+}
+enum TaskStatus {
+ pending
+ completed
+ archived
+}
+model Task {
+ id String @id @default(uuid())
+ weightHours Float?
+ name String
+ area TaskLocation
+ assigneeId String? @db.Uuid
+ assignee Person? @relation(fields:[assigneeId], references:[id])
+ recurrence Json
+ dueDate DateTime @db.Date
+ status TaskStatus @default(pending)
+ version Int @default(0)
+ createdAt DateTime @default(now())
+ updatedAt DateTime @updatedAt
+ completions TaskCompletion[]
+ events TaskEvent[]
+}
+model TaskCompletion {
+ id String @id @default(uuid())
+ taskId String
+ task Task @relation(fields:[taskId],references:[id])
+ scheduledDate DateTime @db.Date
+ completedAt DateTime
+ residentId String @db.Uuid
+ resident Person @relation(fields:[residentId],references:[id])
+ durationMinutes Int?
+ taskSnapshot Json
+ actorId String
+ idempotencyKey String @unique
+ requestHash String
+ version Int @default(0)
+ @@index([taskId, completedAt])
+}
+model TaskEvent {
+ id String @id @default(uuid())
+ taskId String
+ task Task @relation(fields:[taskId],references:[id])
+ actorId String
+ kind String
+ data Json
+ createdAt DateTime @default(now())
+ @@index([taskId,createdAt])
+}
+model Quote {
+ id String @id @default(uuid())
+ text String
+ author String
+ date DateTime? @db.Date
+ createdAt DateTime @default(now())
+ updatedAt DateTime @updatedAt
+}
+model QuoteImport {
+ id String @id @default(uuid())
+ filename String
+ content String
+ checksum String @unique
+ uploaderId String
+ status String @default("awaiting_parser")
+ createdAt DateTime @default(now())
+}
+model Movie {
+ id String @id @default(uuid())
+ tmdbId Int? @unique
+ title String
+ year Int
+ genre String
+ duration Int
+ synopsis String
+ posterUrl String?
+ screenings Screening[]
+}
+model Screening {
+ id String @id @default(uuid())
+ movieId String
+ movie Movie @relation(fields:[movieId],references:[id])
+ status String
+ scheduledAt DateTime?
+ version Int @default(0)
+}
+model DataImport {
+ id String @id @default(uuid())
+ checksum String @unique
+ actorId String
+ result Json
+ createdAt DateTime @default(now())
+}
+model ImportSource {
+ key String @id
+ checksum String
 }

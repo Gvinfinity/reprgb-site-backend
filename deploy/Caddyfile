@@ -1,0 +1,17 @@
+{$SITE_HOST:localhost} {
+    tls internal
+    encode zstd gzip
+    handle /api/* {
+        reverse_proxy backend:3001
+    }
+    handle {
+        root * /srv
+        try_files {path} /index.html
+        file_server
+    }
+    header {
+        X-Content-Type-Options nosniff
+        Referrer-Policy same-origin
+        Permissions-Policy "camera=(), microphone=(), geolocation=()"
+    }
+}

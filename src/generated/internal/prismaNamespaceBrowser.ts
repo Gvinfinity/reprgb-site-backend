@@ -17,8 +17,8 @@
 
 import * as runtime from "@prisma/client/runtime/index-browser"
 
-export type * from '../models'
-export type * from './prismaNamespace'
+export type * from '../models.js'
+export type * from './prismaNamespace.js'
 
 export const Decimal = runtime.Decimal
 
@@ -52,7 +52,21 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   Person: 'Person',
-  Leaderboard: 'Leaderboard'
+  Leaderboard: 'Leaderboard',
+  User: 'User',
+  Session: 'Session',
+  Account: 'Account',
+  Verification: 'Verification',
+  Invitation: 'Invitation',
+  Task: 'Task',
+  TaskCompletion: 'TaskCompletion',
+  TaskEvent: 'TaskEvent',
+  Quote: 'Quote',
+  QuoteImport: 'QuoteImport',
+  Movie: 'Movie',
+  Screening: 'Screening',
+  DataImport: 'DataImport',
+  ImportSource: 'ImportSource'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -61,12 +75,12 @@ export type ModelName = (typeof ModelName)[keyof typeof ModelName]
  * Enums
  */
 
-export const TransactionIsolationLevel = {
+export const TransactionIsolationLevel = runtime.makeStrictEnum({
   ReadUncommitted: 'ReadUncommitted',
   ReadCommitted: 'ReadCommitted',
   RepeatableRead: 'RepeatableRead',
   Serializable: 'Serializable'
-} as const
+} as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
@@ -77,6 +91,7 @@ export const PersonScalarFieldEnum = {
   dateOfBirth: 'dateOfBirth',
   color: 'color',
   isHousemate: 'isHousemate',
+  active: 'active',
   updatedAt: 'updatedAt'
 } as const
 
@@ -96,12 +111,208 @@ export const LeaderboardScalarFieldEnum = {
 export type LeaderboardScalarFieldEnum = (typeof LeaderboardScalarFieldEnum)[keyof typeof LeaderboardScalarFieldEnum]
 
 
+export const UserScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  emailVerified: 'emailVerified',
+  image: 'image',
+  role: 'role',
+  active: 'active',
+  residentId: 'residentId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const SessionScalarFieldEnum = {
+  id: 'id',
+  token: 'token',
+  userId: 'userId',
+  expiresAt: 'expiresAt',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
+
+
+export const AccountScalarFieldEnum = {
+  id: 'id',
+  accountId: 'accountId',
+  providerId: 'providerId',
+  userId: 'userId',
+  password: 'password',
+  accessToken: 'accessToken',
+  refreshToken: 'refreshToken',
+  idToken: 'idToken',
+  accessTokenExpiresAt: 'accessTokenExpiresAt',
+  refreshTokenExpiresAt: 'refreshTokenExpiresAt',
+  scope: 'scope',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum]
+
+
+export const VerificationScalarFieldEnum = {
+  id: 'id',
+  identifier: 'identifier',
+  value: 'value',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
+
+
+export const InvitationScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  residentId: 'residentId',
+  tokenHash: 'tokenHash',
+  expiresAt: 'expiresAt',
+  usedAt: 'usedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type InvitationScalarFieldEnum = (typeof InvitationScalarFieldEnum)[keyof typeof InvitationScalarFieldEnum]
+
+
+export const TaskScalarFieldEnum = {
+  id: 'id',
+  weightHours: 'weightHours',
+  name: 'name',
+  area: 'area',
+  assigneeId: 'assigneeId',
+  recurrence: 'recurrence',
+  dueDate: 'dueDate',
+  status: 'status',
+  version: 'version',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum]
+
+
+export const TaskCompletionScalarFieldEnum = {
+  id: 'id',
+  taskId: 'taskId',
+  scheduledDate: 'scheduledDate',
+  completedAt: 'completedAt',
+  residentId: 'residentId',
+  durationMinutes: 'durationMinutes',
+  taskSnapshot: 'taskSnapshot',
+  actorId: 'actorId',
+  idempotencyKey: 'idempotencyKey',
+  requestHash: 'requestHash',
+  version: 'version'
+} as const
+
+export type TaskCompletionScalarFieldEnum = (typeof TaskCompletionScalarFieldEnum)[keyof typeof TaskCompletionScalarFieldEnum]
+
+
+export const TaskEventScalarFieldEnum = {
+  id: 'id',
+  taskId: 'taskId',
+  actorId: 'actorId',
+  kind: 'kind',
+  data: 'data',
+  createdAt: 'createdAt'
+} as const
+
+export type TaskEventScalarFieldEnum = (typeof TaskEventScalarFieldEnum)[keyof typeof TaskEventScalarFieldEnum]
+
+
+export const QuoteScalarFieldEnum = {
+  id: 'id',
+  text: 'text',
+  author: 'author',
+  date: 'date',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type QuoteScalarFieldEnum = (typeof QuoteScalarFieldEnum)[keyof typeof QuoteScalarFieldEnum]
+
+
+export const QuoteImportScalarFieldEnum = {
+  id: 'id',
+  filename: 'filename',
+  content: 'content',
+  checksum: 'checksum',
+  uploaderId: 'uploaderId',
+  status: 'status',
+  createdAt: 'createdAt'
+} as const
+
+export type QuoteImportScalarFieldEnum = (typeof QuoteImportScalarFieldEnum)[keyof typeof QuoteImportScalarFieldEnum]
+
+
+export const MovieScalarFieldEnum = {
+  id: 'id',
+  tmdbId: 'tmdbId',
+  title: 'title',
+  year: 'year',
+  genre: 'genre',
+  duration: 'duration',
+  synopsis: 'synopsis',
+  posterUrl: 'posterUrl'
+} as const
+
+export type MovieScalarFieldEnum = (typeof MovieScalarFieldEnum)[keyof typeof MovieScalarFieldEnum]
+
+
+export const ScreeningScalarFieldEnum = {
+  id: 'id',
+  movieId: 'movieId',
+  status: 'status',
+  scheduledAt: 'scheduledAt',
+  version: 'version'
+} as const
+
+export type ScreeningScalarFieldEnum = (typeof ScreeningScalarFieldEnum)[keyof typeof ScreeningScalarFieldEnum]
+
+
+export const DataImportScalarFieldEnum = {
+  id: 'id',
+  checksum: 'checksum',
+  actorId: 'actorId',
+  result: 'result',
+  createdAt: 'createdAt'
+} as const
+
+export type DataImportScalarFieldEnum = (typeof DataImportScalarFieldEnum)[keyof typeof DataImportScalarFieldEnum]
+
+
+export const ImportSourceScalarFieldEnum = {
+  key: 'key',
+  checksum: 'checksum'
+} as const
+
+export type ImportSourceScalarFieldEnum = (typeof ImportSourceScalarFieldEnum)[keyof typeof ImportSourceScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -118,4 +329,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

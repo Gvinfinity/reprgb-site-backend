@@ -1,5 +1,8 @@
-import { prisma } from "../PrismaClient"
-import { CreateLeaderboardInput, UpdateLeaderboardInput } from '../schemas/leaderboard';
+import { prisma } from "../PrismaClient.js";
+import {
+  CreateLeaderboardInput,
+  UpdateLeaderboardInput,
+} from "../schemas/leaderboard.js";
 
 export class LeaderboardService {
   async createLeaderboard(data: CreateLeaderboardInput) {
@@ -8,8 +11,9 @@ export class LeaderboardService {
         semester: new Date(data.semester),
         style: data.style,
         personId: data.personId,
-        sleepingMisses: data.sleepingMisses?.map(date => new Date(date)) || [],
-        classMisses: data.classMisses?.map(date => new Date(date)) || [],
+        sleepingMisses:
+          data.sleepingMisses?.map((date) => new Date(date)) || [],
+        classMisses: data.classMisses?.map((date) => new Date(date)) || [],
       },
       include: {
         person: true,
@@ -40,12 +44,14 @@ export class LeaderboardService {
       updateData.semester = new Date(data.semester);
     }
     if (data.sleepingMisses) {
-      updateData.sleepingMisses = data.sleepingMisses.map(date => new Date(date));
+      updateData.sleepingMisses = data.sleepingMisses.map(
+        (date) => new Date(date),
+      );
     }
     if (data.classMisses) {
-      updateData.classMisses = data.classMisses.map(date => new Date(date));
+      updateData.classMisses = data.classMisses.map((date) => new Date(date));
     }
-    
+
     return await prisma.leaderboard.update({
       where: { id },
       data: updateData,
