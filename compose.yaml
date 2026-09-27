@@ -44,6 +44,7 @@ services:
     build: ../reprgb-site
     environment:
       SITE_HOST: ${SITE_HOST:-localhost}
+      CLOUDFLARE_API_TOKEN: ${CLOUDFLARE_API_TOKEN}
     ports:
       - "80:80"
       - "443:443"
